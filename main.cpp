@@ -49,9 +49,10 @@ void PrintMatrix(Matrix& matrix) {
 template <typename T>
 void PrintVector(std::vector<T>& vec) {
     std::ranges::for_each(vec, [](T& x) {
-        std::cout << x << ' ';
+        std::cout << std::setprecision(10) << std::fixed << x << ' ';
     });
     std::cout << std::endl;
+    std::cout.unsetf(std::ios_base::fixed);
 };
 
 Matrix PrepareMatrix(Matrix& src) {
@@ -97,7 +98,8 @@ size_t CountIterations(Matrix& matrix) {
     }
 
     return static_cast<size_t>(
-        std::ceil(std::log2l(EPS * (1 - B) / C) / std::log2l(B) - 1));
+        std::ceil(std::log2l(EPS * (1 - B) / C) / std::log2l(B) - 1)
+    );
 }
 
 std::vector<ld> IterationMethod(Matrix& matrix) {
@@ -106,11 +108,13 @@ std::vector<ld> IterationMethod(Matrix& matrix) {
         res[i] = matrix[i].back();
     }
 
+    size_t k = CountIterations(matrix);
+    std::cout << "k = " << k << std::endl;
+
     std::cout << "i | result" << std::endl;
     std::cout << "0 | ";
     PrintVector(res);
-
-    size_t k = CountIterations(matrix);
+    
     for (size_t i : std::views::iota(1ULL, k + 1)) {
         std::vector<ld> new_res(res.size());
         for (size_t j : std::views::iota(0ULL, res.size())) {
@@ -123,6 +127,7 @@ std::vector<ld> IterationMethod(Matrix& matrix) {
         std::cout << i << " | ";
         PrintVector(res);
     }
+    std::cout << std::endl;
 
     return res;
 }
@@ -142,18 +147,24 @@ void CheckAnswer(Matrix& matrix, std::vector<ld>& vec) {
                   << std::setw(WEIGHT) << res << " | "
                   << std::setw(WEIGHT) << matrix[i].back() << std::endl;
     }
+    std::cout << std::endl;
 }
 
 int main() {
-    Matrix source_matrix = GetMatrixFile("input.txt");
+    freopen("result.txt", "w", stdout);
+
+    Matrix source_matrix = GetMatrixFile("prepared.txt");
     PrintMatrix(source_matrix);
 
     Matrix prepared_matrix = PrepareMatrix(source_matrix);
     PrintMatrix(prepared_matrix);
 
     std::vector<ld> ans = IterationMethod(prepared_matrix);
+
     std::cout << "Answer:" << std::endl;
     PrintVector(ans);
+    std::cout << std::endl;
+
     CheckAnswer(source_matrix, ans);
 
     return 0;
