@@ -1,4 +1,5 @@
 
 .vscode
 *.exe
-result.txt
+lab*/result.txt
+lab*/main

@@ -153,7 +153,7 @@ void CheckAnswer(Matrix& matrix, std::vector<ld>& vec) {
 int main() {
     freopen("result.txt", "w", stdout);
 
-    Matrix source_matrix = GetMatrixFile("prepared.txt");
+    Matrix source_matrix = GetMatrixFile("input.txt");
     PrintMatrix(source_matrix);
 
     Matrix prepared_matrix = PrepareMatrix(source_matrix);
