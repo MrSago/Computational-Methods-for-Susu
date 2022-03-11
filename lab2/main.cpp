@@ -1,26 +1,50 @@
 
-#include <iostream>
 #include <cmath>
+#include <iomanip>
+#include <iostream>
 
-double f(double x) {
-    return std::atan(3 * x) - x;
+using ld = long double;
+
+constexpr ld EPS = 1E-3L;
+
+
+ld f(ld x) {
+    return std::atan(3 * x);
 }
 
-double fp(double x) {
-    return 1 / (1 + 9 * x * x) - 1;
+ld IterationMethod(ld start) {
+    ld x0, x;
+    x0 = x = start;
+
+    do {
+        x0 = x;
+        x = f(x0);
+    } while (std::abs(x - x0) > EPS);
+
+    return x;
 }
 
 int main() {
-    const double eps = 0.001;
+    constexpr ld s1 = 0.0L;
+    constexpr ld s2 = -1.0L;
+    constexpr ld s3 = 1.0L;
 
-    double x;
-    std::cin >> x;
-    
-    while (std::abs(f(x)) > eps) {
-        x -= f(x) / fp(x);
-    }
+    ld x1, x2, x3;
+    x1 = IterationMethod(s1);
+    x2 = IterationMethod(s2);
+    x3 = IterationMethod(s3);
 
-    std::cout << '\n' << x << '\n';
+    std::cout << std::setprecision(4);
+    std::cout << "x = arctg(x)\n\n";
+
+    std::cout << "s1 = " << s1 << '\n';
+    std::cout << "x1 = " << x1 << "\n\n";
+
+    std::cout << "s2 = " << s2 << '\n';
+    std::cout << "x2 = " << x2 << "\n\n";
+
+    std::cout << "s3 = " << s3 << '\n';
+    std::cout << "x3 = " << x3 << "\n\n";
 
     return 0;
 }

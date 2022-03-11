@@ -4,3 +4,4 @@
 *.out
 lab*/result.txt
 lab*/main
+*.synctex.gz
