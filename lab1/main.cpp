@@ -11,7 +11,7 @@
 using ld = long double;
 using Matrix = std::vector<std::vector<ld>>;
 
-constexpr ld EPS = 5e-4L;
+constexpr ld EPS = 5E-4L;
 constexpr int WEIGHT = 8;
 
 Matrix GetMatrixFile(const char filename[]) {
@@ -35,15 +35,15 @@ void PrintMatrix(Matrix& matrix) {
         std::string xi = std::string("x") + std::to_string(i);
         std::cout << std::setw(WEIGHT) << xi << ' ';
     }
-    std::cout << std::setw(WEIGHT) << 'C' << std::endl;
+    std::cout << std::setw(WEIGHT) << 'C' << '\n';
 
     std::ranges::for_each(matrix, [](auto& vec) {
         std::ranges::for_each(vec, [](auto& x) {
             std::cout << std::setw(WEIGHT) << std::setprecision(4) << x << ' ';
         });
-        std::cout << std::endl;
+        std::cout << '\n';
     });
-    std::cout << std::endl;
+    std::cout << '\n';
 }
 
 template <typename T>
@@ -51,7 +51,7 @@ void PrintVector(std::vector<T>& vec) {
     std::ranges::for_each(vec, [](T& x) {
         std::cout << std::setprecision(10) << std::fixed << x << ' ';
     });
-    std::cout << std::endl;
+    std::cout << '\n';
     std::cout.unsetf(std::ios_base::fixed);
 };
 
@@ -109,9 +109,9 @@ std::vector<ld> IterationMethod(Matrix& matrix) {
     }
 
     size_t k = CountIterations(matrix);
-    std::cout << "k = " << k << std::endl;
+    std::cout << "k = " << k << '\n';
 
-    std::cout << "i | result" << std::endl;
+    std::cout << "i | result" << '\n';
     std::cout << "0 | ";
     PrintVector(res);
     
@@ -127,16 +127,16 @@ std::vector<ld> IterationMethod(Matrix& matrix) {
         std::cout << i << " | ";
         PrintVector(res);
     }
-    std::cout << std::endl;
+    std::cout << '\n';
 
     return res;
 }
 
 void CheckAnswer(Matrix& matrix, std::vector<ld>& vec) {
-    std::cout << "Check answer:" << std::endl
+    std::cout << "Check answer:" << '\n'
               << "i |" << std::setw(11)
               << "A |" << std::setw(9)
-              << "C" << std::endl;
+              << "C" << '\n';
 
     for (size_t i : std::views::iota(0ULL, vec.size())) {
         ld res = 0;
@@ -145,15 +145,15 @@ void CheckAnswer(Matrix& matrix, std::vector<ld>& vec) {
         }
         std::cout << i + 1 << " | "
                   << std::setw(WEIGHT) << res << " | "
-                  << std::setw(WEIGHT) << matrix[i].back() << std::endl;
+                  << std::setw(WEIGHT) << matrix[i].back() << '\n';
     }
-    std::cout << std::endl;
+    std::cout << '\n';
 }
 
 int main() {
     freopen("result.txt", "w", stdout);
 
-    Matrix source_matrix = GetMatrixFile("input.txt");
+    Matrix source_matrix = GetMatrixFile("prepared.txt");
     PrintMatrix(source_matrix);
 
     Matrix prepared_matrix = PrepareMatrix(source_matrix);
@@ -161,9 +161,9 @@ int main() {
 
     std::vector<ld> ans = IterationMethod(prepared_matrix);
 
-    std::cout << "Answer:" << std::endl;
+    std::cout << "Answer:" << '\n';
     PrintVector(ans);
-    std::cout << std::endl;
+    std::cout << '\n';
 
     CheckAnswer(source_matrix, ans);
 
