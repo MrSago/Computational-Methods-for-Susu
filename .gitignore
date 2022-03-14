@@ -5,3 +5,5 @@
 lab*/result.txt
 lab*/main
 *.synctex.gz
+*.aux
+*.log
