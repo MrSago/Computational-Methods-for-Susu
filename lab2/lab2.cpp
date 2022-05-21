@@ -34,7 +34,7 @@ int main() {
     x2 = IterationMethod(s2);
     x3 = IterationMethod(s3);
 
-    std::cout << std::setprecision(4);
+    std::cout << std::setprecision(9);
     std::cout << "x = arctg(x)\n\n";
 
     std::cout << "s1 = " << s1 << '\n';
